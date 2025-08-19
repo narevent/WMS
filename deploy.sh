@@ -1,39 +1,62 @@
 #!/bin/bash
 # deploy.sh
 
+REPO_URL="https://github.com/narevent/WMS.git"
+PROJECT_DIR="/home/deploy/apps"
+BRANCH="main"
+
 echo "Starting deployment..."
 
-# Pull latest code
-git pull origin main
+mkdir -p "$PROJECT_DIR"
+cd "$PROJECT_DIR"
 
-# Build and restart containers
+if [ -d ".git" ]; then
+    echo "Repository exists, pulling latest changes..."
+    git fetch origin
+    git reset --hard origin/$BRANCH
+else
+    echo "Initial setup: Cloning repository..."
+    git clone "$REPO_URL" .
+    git checkout "$BRANCH"
+fi
+
+git checkout "$BRANCH"
+echo "Current commit: $(git rev-parse HEAD)"
+
+echo "Stopping existing containers..."
 docker-compose down
+
+echo "Building containers..."
 docker-compose build --no-cache
+
+echo "Starting containers..."
 docker-compose up -d
 
-# Run migrations
-docker-compose exec wms_api python manage.py migrate
-docker-compose exec wms_frontend python manage.py migrate
+echo "Waiting for containers to start..."
+sleep 30
 
-# Collect static files
-docker-compose exec wms_api python manage.py collectstatic --noinput
-docker-compose exec wms_frontend python manage.py collectstatic --noinput
+echo "Running migrations..."
+docker-compose exec -T wms_api python manage.py migrate
+docker-compose exec -T wms_frontend python manage.py migrate
 
-echo "Deployment completed!"
+echo "Collecting static files..."
+docker-compose exec -T wms_api python manage.py collectstatic --noinput
+docker-compose exec -T wms_frontend python manage.py collectstatic --noinput
 
-chmod +x deploy.sh
+echo "Deployment completed successfully!"
 
-# Temporarily modify nginx.conf to only serve HTTP for certificate generation
-docker-compose up -d nginx
+setup_ssl() {
+    echo "Setting up SSL certificates..."
+    docker-compose up -d nginx
+    docker-compose run --rm certbot
+    docker-compose restart nginx
+    echo "SSL setup completed!"
+}
 
-# Get SSL certificates
-docker-compose run --rm certbot
+# Uncomment the line below for initial setup with SSL
+# setup_ssl
 
-# Then update nginx.conf with SSL configuration and restart
-docker-compose restart nginx
-
-# Add to crontab
-crontab -e
-
-# Add this line (runs twice daily)
-0 12 * * * /usr/local/bin/docker-compose -f /home/deploy/apps/docker-compose.yml run --rm certbot renew && /usr/local/bin/docker-compose -f /home/deploy/apps/docker-compose.yml restart nginx
+# Note: Add SSL certificate renewal to crontab manually:
+# crontab -e
+# Add this line (runs twice daily):
+# 0 12 * * * /usr/local/bin/docker-compose -f /home/deploy/apps/docker-compose.yml run --rm certbot renew && /usr/local/bin/docker-compose -f /home/deploy/apps/docker-compose.yml restart nginx
