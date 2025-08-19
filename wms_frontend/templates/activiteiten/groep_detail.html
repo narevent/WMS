@@ -1,0 +1,5 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ groep.title }} - Muziekschool{% endblock %}
+{% block content %}
+    {% include 'main/partials/_detail_view.html' with item=groep %}
+{% endblock %}

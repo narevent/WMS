@@ -1,0 +1,25 @@
+<div class="max-w-5xl mx-auto">
+    <ul class="divide-y divide-gray-200 bg-white rounded-lg shadow">
+        {% for sponsor in sponsors %}
+            <li>
+                <a href="{{ sponsor.link }}"
+                class="flex flex-row items-start sm:items-center gap-4 px-6 py-4 hover:bg-gray-50 transition"
+                target="_blank">
+                    
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-gray-900">{{ sponsor.naam }}</h3>
+                        {% if sponsor.beschrijving %}
+                            <div class="text-gray-600 text-sm mt-1 line-clamp-2">
+                                {{ sponsor.beschrijving|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex-shrink-0 w-32 h-32 bg-white rounded overflow-hidden flex items-center justify-center">
+                        <img src="{{ sponsor.image }}" alt="{{ sponsor.naam }}" class="max-h-full max-w-full object-contain">
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

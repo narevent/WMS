@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="banner-container">
+    {% for banner in banners %}
+        <section class="py-4 sm:py-6 md:py-8 lg:py-12 banner-spacing-mobile
+            {% cycle 'bg-white' 'bg-gray-50' 'bg-white' %} 
+            {% if banner.background_image %}bg-cover bg-center relative{% endif %}"
+            {% if banner.background_image %}style="background-image: url('{{ banner.background_image }}');"{% endif %}>
+            
+            {% if banner.background_image %}
+                <div class="absolute inset-0 bg-black/30 sm:bg-black/40"></div> <!-- overlay for readability -->
+            {% endif %}
+            
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {% include 'main/partials/banner.html' with banner=banner %}
+            </div>
+        </section>
+        {% if not forloop.last %}
+            <div class="border-t border-gray-200"></div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

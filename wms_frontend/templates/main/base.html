@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Wereldmuziekschool{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: {{ design_settings.primary_color|default:"#000000" }};
+            --secondary-color: {{ design_settings.secondary_color|default:"#FFFFFF" }};
+        }
+        body {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            font-family: "{{ design_settings.font_family|default:"Arial" }}";
+        }
+        input, textarea, select {
+            color: #111 !important;
+        }
+        input:focus, textarea:focus, select:focus {
+            color: #111 !important;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-text-center {
+                text-align: center;
+            }
+            .mobile-full-width {
+                width: 100% !important;
+            }
+            .mobile-no-flex {
+                display: block !important;
+            }
+            button, a, input, select, textarea {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            .mobile-px-2 {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            .mobile-overflow-hidden {
+                overflow-x: hidden;
+            }
+        }
+        @media (max-width: 768px) {
+            .group:hover .group-hover\:opacity-100 {
+                position: static !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                margin-top: 0 !important;
+                width: 100% !important;
+            }
+            .group:hover .group-hover\:opacity-100 a {
+                padding: 0.5rem 1rem !important;
+                border-bottom: 1px solid #e5e7eb !important;
+            }
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f5faff',
+                            100: '#e0f0ff',
+                            200: '#b8dcff',
+                            300: '#89c5ff',
+                            400: '#57a9f5',
+                            500: '#368ee0',   // Main blue - serious, clean
+                            600: '#1f75c3',
+                            700: '#175ca2',
+                            800: '#15497e',
+                            900: '#133a63',   // Deep blue for contrast
+                        },
+                        secondary: {
+                            50: '#eef8fb',
+                            100: '#d6f1f9',
+                            200: '#b2e4f1',
+                            300: '#80d0e8',
+                            400: '#3cb8db',
+                            500: '#1fa3cb',   // Accent blue-green – playful touch
+                            600: '#168ab1',
+                            700: '#116e90',
+                            800: '#0e5772',
+                            900: '#0b455c',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    },
+                    screens: {
+                        'xs': '475px',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans overflow-x-hidden">
+
+    <!-- Navigation -->
+    {% include 'main/navigation.html' %}
+
+    <!-- Messages -->
+    {% include 'main/messages.html' %}
+
+    <!-- Main Content -->
+    <main class="min-h-screen">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'main/footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.card, .feature, .animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+            
+            document.addEventListener('click', function(event) {
+                const mobileMenuButton = event.target.closest('[x-data] button');
+                const mobileMenu = event.target.closest('[x-show="mobileMenuOpen"]');
+                
+                if (!mobileMenuButton && !mobileMenu) {
+                    // This would close the menu, but Alpine.js handles this automatically
+                    // Just here for potential future enhancements
+                }
+            });
+            
+            // Prevent zoom on input focus (iOS)
+            const viewport = document.querySelector('meta[name=viewport]');
+            let viewportContent = viewport.getAttribute('content');
+            
+            document.addEventListener('focusin', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                    viewport.setAttribute('content', viewportContent + ', maximum-scale=1.0');
+                }
+            });
+            
+            document.addEventListener('focusout', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                    viewport.setAttribute('content', viewportContent);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

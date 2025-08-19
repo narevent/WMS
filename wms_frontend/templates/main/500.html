@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+
+{% block title %}Pagina niet gevonden - Wereldmuziekschool{% endblock %}
+
+{% block content %}
+<section class="min-h-[70vh] flex flex-col items-center justify-center text-center px-6 py-16 animate-fade-in">
+    <h1 class="text-6xl font-extrabold text-primary-600 mb-4">404</h1>
+    <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 mb-6">Oeps! Deze pagina bestaat niet.</h2>
+    <p class="text-gray-600 max-w-xl mb-8">
+        Het lijkt erop dat je een pagina hebt gezocht die niet (meer) bestaat. 
+        Misschien heb je een verkeerde link gevolgd of is de pagina verplaatst.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4">
+        <a href="{% url 'main:home' %}" class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow transition-colors">
+            Terug naar Home
+        </a>
+        <a href="{% url 'main:contact' %}" class="px-6 py-3 bg-secondary-500 hover:bg-secondary-600 text-white rounded-lg shadow transition-colors">
+            Neem contact op
+        </a>
+    </div>
+</section>
+{% endblock %}

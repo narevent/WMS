@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ post.titel }} - Wereldmuziekschool{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if post.image %}
+        <div class="mb-8">
+            <img src="{{ post.image }}" alt="{{ post.titel }}" class="w-full h-96 object-cover rounded-lg shadow-lg">
+        </div>
+        {% endif %}
+        
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ post.titel }}</h1>
+            <div class="flex items-center space-x-6 text-lg text-gray-600 mb-6">
+                <div class="flex items-center">
+                    <i class="fas fa-clock text-primary-600 mr-2"></i>
+                    {{ post.updated_at|slice:10 }}
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="text-gray-500 prose prose-lg max-w-none mb-8">
+            {{ post.content|safe|linebreaks }}
+        </div>
+        
+        <div class="text-center">
+            <a href="{% url 'main:contact' %}" class="bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors inline-block">
+                Meer informatie
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

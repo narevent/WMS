@@ -1,0 +1,60 @@
+<!-- Footer -->
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            <div class="col-span-1 sm:col-span-2 lg:col-span-2">
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="{{ branding_assets.logo }}" alt="Logo" class="h-8 sm:h-10 w-auto max-h-8 sm:max-h-10 flex-shrink-0" />
+                    <span class="text-lg sm:text-xl font-bold">Wereldmuziekschool</span>
+                </div>
+                <p class="text-gray-400 mb-4 text-sm sm:text-base leading-relaxed">
+                    Het lesaanbod van de WMS is aantrekkelijk en bereikbaar voor alle doelgroepen. Ons muziekonderwijs is heel divers: wij richten ons op klassieke muziek, jazz en popmuziek, maar ook blues, electronische muziek, volksmuziek en natuurlijk wereldmuziek zijn goed vertegenwoordigd in ons aanbod van muzieklessen.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors p-2 rounded-md hover:bg-gray-800">
+                        <i class="fab fa-facebook-f text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors p-2 rounded-md hover:bg-gray-800">
+                        <i class="fab fa-instagram text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors p-2 rounded-md hover:bg-gray-800">
+                        <i class="fab fa-youtube text-lg"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-span-1">
+                <h3 class="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Snelle Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="{% url 'muziekles:proefles' %}" class="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">Proefles</a></li>
+                    <li><a href="{% url 'muziekles:inschrijven' %}" class="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">Inschrijven</a></li>
+                    <li><a href="{% url 'muziekles:tarieven' %}" class="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">Tarieven</a></li>
+                    <li><a href="{% url 'muziekles:instrumenten' %}" class="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">Instrumenten</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-span-1">
+                <h3 class="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contact</h3>
+                <h4 class="text-base sm:text-lg text-gray-400 font-semibold mb-3 sm:mb-4">{{contact_info.organisatie}}</h4>
+                <ul class="space-y-2 text-gray-400 text-sm sm:text-base">
+                    <li class="flex items-start space-x-2">
+                        <i class="fas fa-map-marker-alt mt-1 flex-shrink-0"></i>
+                        <span class="break-words">{{contact_info.adres}}, {{contact_info.postcode}} {{contact_info.plaats}}</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <i class="fas fa-phone flex-shrink-0"></i>
+                        <a href="tel:{{contact_info.telefoon}}" class="hover:text-white transition-colors">{{contact_info.telefoon}}</a>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <i class="fas fa-envelope mt-1 flex-shrink-0"></i>
+                        <a href="mailto:{{ contact_info.email }}" class="hover:text-white transition-colors break-all">{{ contact_info.email }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-gray-400">
+            <p class="text-sm sm:text-base">&copy; {% now "Y" %} Wereldmuziekschool. Alle rechten voorbehouden.</p>
+        </div>
+    </div>
+</footer>

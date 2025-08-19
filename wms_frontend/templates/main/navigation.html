@@ -1,0 +1,115 @@
+<!-- Navigation -->
+<nav class="bg-white shadow-lg sticky top-0 z-50" x-data="{ mobileMenuOpen: false }">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center min-w-0">
+                <a href="{% url 'main:home' %}" class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+                    <img src="{{ branding_assets.logo }}" alt="Logo" class="h-8 sm:h-10 w-auto max-h-8 sm:max-h-10 flex-shrink-0" />
+                    <span class="text-lg sm:text-xl font-bold text-gray-900 truncate">Wereldmuziekschool</span>
+                </a>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
+                <a href="{% url 'main:home' %}" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">Home</a>
+                
+                <div class="relative group">
+                    <button class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center whitespace-nowrap">
+                        Over Ons <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div class="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="{% url 'stichting:over_ons' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Missie en Visie</a>
+                        <a href="{% url 'muziekles:locaties' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Locaties</a>
+                        <a href="{% url 'muziekles:vacatures' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Vacatures</a>
+                        <a href="{% url 'stichting:stichting' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Stichting WMS</a>
+                        <a href="{% url 'stichting:sponsors' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Partners</a>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <button class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center whitespace-nowrap">
+                        Muziekles <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div class="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="{% url 'muziekles:proefles' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Proefles</a>
+                        <a href="{% url 'muziekles:instrumenten' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Instrumenten</a>
+                        <a href="{% url 'muziekles:locaties' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Locaties</a>
+                        <a href="{% url 'muziekles:tarieven' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Tarieven</a>
+                        <a href="{% url 'muziekles:inschrijven' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Inschrijven</a>
+                        <a href="{% url 'agenda:vakanties' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Vakanties</a>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center whitespace-nowrap">
+                        Activiteiten <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div class="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="{% url 'activiteiten:cursussen' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Cursussen</a>
+                        <a href="{% url 'activiteiten:workshops' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Workshops</a>
+                        <a href="{% url 'activiteiten:projecten' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Projecten</a>
+                        <a href="{% url 'activiteiten:groepen' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap">Groepen</a>
+                    </div>
+                </div>
+                
+                <a href="{% url 'agenda:agenda' %}" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">Agenda</a>
+                <a href="{% url 'main:contact' %}" class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">Contact</a>
+            </div>
+
+            <!-- Mobile/Tablet menu button -->
+            <div class="lg:hidden flex items-center">
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 hover:text-primary-600 p-2 rounded-md transition-colors touch-manipulation">
+                    <i class="fas fa-bars text-xl" x-show="!mobileMenuOpen"></i>
+                    <i class="fas fa-times text-xl" x-show="mobileMenuOpen"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile/Tablet Menu -->
+    <div x-show="mobileMenuOpen" 
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 transform -translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform -translate-y-2"
+            class="lg:hidden bg-white border-t border-gray-200 shadow-lg">
+        <div class="px-4 py-3 space-y-1 max-h-96 overflow-y-auto">
+            <a href="{% url 'main:home' %}" class="block px-3 py-3 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base font-medium transition-colors">Home</a>
+            
+            <!-- Mobile Over Ons Section -->
+            <div class="space-y-1">
+                <div class="px-3 py-2 text-gray-900 font-semibold text-sm uppercase tracking-wide">Over Ons</div>
+                <a href="{% url 'stichting:over_ons' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Missie en Visie</a>
+                <a href="{% url 'muziekles:locaties' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Locaties</a>
+                <a href="{% url 'muziekles:vacatures' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Vacatures</a>
+                <a href="{% url 'stichting:stichting' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Stichting WMS</a>
+                <a href="{% url 'stichting:sponsors' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Partners</a>
+            </div>
+            
+            <!-- Mobile Muziekles Section -->
+            <div class="space-y-1">
+                <div class="px-3 py-2 text-gray-900 font-semibold text-sm uppercase tracking-wide">Muziekles</div>
+                <a href="{% url 'muziekles:proefles' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Proefles</a>
+                <a href="{% url 'muziekles:instrumenten' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Instrumenten</a>
+                <a href="{% url 'muziekles:locaties' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Locaties</a>
+                <a href="{% url 'muziekles:tarieven' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Tarieven</a>
+                <a href="{% url 'muziekles:inschrijven' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Inschrijven</a>
+                <a href="{% url 'agenda:vakanties' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Vakanties</a>
+            </div>
+
+            <!-- Mobile Activiteiten Section -->
+            <div class="space-y-1">
+                <div class="px-3 py-2 text-gray-900 font-semibold text-sm uppercase tracking-wide">Activiteiten</div>
+                <a href="{% url 'activiteiten:cursussen' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Cursussen</a>
+                <a href="{% url 'activiteiten:workshops' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Workshops</a>
+                <a href="{% url 'activiteiten:projecten' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Projecten</a>
+                <a href="{% url 'activiteiten:groepen' %}" class="block px-6 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base">Groepen</a>
+            </div>
+            
+            <a href="{% url 'agenda:agenda' %}" class="block px-3 py-3 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base font-medium transition-colors">Agenda</a>
+            <a href="{% url 'main:contact' %}" class="block px-3 py-3 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md text-base font-medium transition-colors">Contact</a>
+        </div>
+    </div>
+</nav>

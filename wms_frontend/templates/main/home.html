@@ -1,0 +1,244 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Home - Wereldmuziekschool{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes fadeInUp {
+        0% { opacity: 1; transform: translateY(10px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+    }
+    @media (max-width: 768px) {
+        .hero-content-mobile {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .hero-title-mobile {
+            font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        .hero-text-mobile {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .hero-buttons-mobile {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .hero-button-mobile {
+            width: 100%;
+            text-align: center;
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
+        }
+        .hero-height-mobile {
+            min-height: 70vh;
+            max-height: 80vh;
+        }
+        .slider-control-mobile {
+            padding: 0.75rem;
+            font-size: 1.125rem;
+        }
+        .slider-dots-mobile {
+            bottom: 1rem;
+        }
+        .slider-dot-mobile {
+            width: 0.75rem;
+            height: 0.75rem;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .hero-title-tablet {
+            font-size: 3rem;
+            line-height: 1.1;
+        }
+        
+        .hero-text-tablet {
+            font-size: 1.125rem;
+        }
+        
+        .hero-buttons-tablet {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+    }
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    @media (max-width: 768px) {
+        .banner-spacing-mobile {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+    }
+</style>
+
+<!-- Hero Section with Headers -->
+{% if headers %}
+<section class="relative overflow-hidden">
+    <div class="hero-slider" x-data="{ 
+        currentSlide: 0, 
+        slides: {{ headers|length }},
+        nextSlide() {
+            this.currentSlide = (this.currentSlide + 1) % this.slides;
+        },
+        prevSlide() {
+            this.currentSlide = (this.currentSlide - 1 + this.slides) % this.slides;
+        }
+    }">
+        
+        {% for header in headers %}
+        <div class="relative h-64 sm:h-80 md:h-96 lg:h-[500px] flex items-center bg-gradient-to-r from-primary-900 to-primary-600"
+            x-show="currentSlide === {{ forloop.counter0 }}"
+            x-transition:enter="transition-opacity duration-500"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            style="opacity: 0;"
+            x-init="$el.style.opacity = 1; $el.classList.add('animate-fade-in');">
+
+            {% if header.background_image %}
+            <div class="relative w-1/3 h-full flex-shrink-0">
+                <img src="{{ header.background_image }}"
+                    alt="{{ header.titel }}"
+                    class="w-full h-full object-cover object-center">
+                <div class="absolute inset-0 bg-black bg-opacity-40 sm:bg-opacity-50"></div>
+            </div>
+            {% endif %}
+
+            <div class="relative z-10 flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white flex items-center">
+                <div class="max-w-3xl text-left">
+                    <h1 class="text-xl sm:text-2xl md:text-4xl lg:text-6xl font-bold mb-2 sm:mb-3 md:mb-6 animate-fade-in">
+                        {{ header.titel }}
+                    </h1>
+                    <div class="text-xs sm:text-sm md:text-lg lg:text-xl mb-3 sm:mb-4 md:mb-8 animate-fade-in leading-tight" style="animation-delay: 0.2s;">
+                        {{ header.info|safe }}
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-1 sm:gap-2 md:gap-4 animate-fade-in" style="animation-delay: 0.4s;">
+                        <a href="{% url 'muziekles:proefles' %}"
+                        class="bg-secondary-500 hover:bg-secondary-600 text-white px-3 sm:px-4 md:px-8 py-1.5 sm:py-2 md:py-3 rounded sm:rounded-md md:rounded-lg font-medium sm:font-semibold text-xs sm:text-sm md:text-lg transition-all duration-300 transform hover:scale-105 inline-block text-center flex items-center justify-center">
+                            Gratis Proefles
+                        </a>
+                        <a href="{% url 'muziekles:instrumenten' %}"
+                        class="border border-white text-white hover:bg-white hover:text-primary-600 px-3 sm:px-4 md:px-8 py-1.5 sm:py-2 md:py-3 rounded sm:rounded-md md:rounded-lg font-medium sm:font-semibold text-xs sm:text-sm md:text-lg transition-all duration-300 inline-block text-center flex items-center justify-center">
+                            Bekijk Instrumenten
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <!-- Navigation Arrows -->
+        {% if headers|length > 1 %}
+        <button @click="prevSlide()" 
+                class="hidden md:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200 z-20">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button @click="nextSlide()" 
+                class="hidden md:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200 z-20">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- Dots Indicator -->
+        <div class="hidden md:flex absolute bottom-4 left-1/2 transform -translate-x-1/2 space-x-2 z-20">
+            {% for header in headers %}
+            <button @click="currentSlide = {{ forloop.counter0 }}"
+                    class="w-3 h-3 rounded-full transition-all duration-200"
+                    :class="currentSlide === {{ forloop.counter0 }} ? 'bg-white' : 'bg-white bg-opacity-50'">
+            </button>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Banners Section -->
+<div class="banner-container">
+    {% for banner in banners %}
+        <section class="py-4 sm:py-6 md:py-8 lg:py-12 banner-spacing-mobile
+            {% cycle 'bg-white' 'bg-gray-50' 'bg-white' %} 
+            {% if banner.background_image %}bg-cover bg-center relative{% endif %}"
+            {% if banner.background_image %}style="background-image: url('{{ banner.background_image }}');"{% endif %}>
+            
+            {% if banner.background_image %}
+                <div class="absolute inset-0 bg-black/30 sm:bg-black/40"></div> <!-- overlay for readability -->
+            {% endif %}
+            
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {% include 'main/partials/banner.html' with banner=banner %}
+            </div>
+        </section>
+        {% if not forloop.last %}
+            <div class="border-t border-gray-200"></div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth <= 768) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        const heroSlider = document.querySelector('.hero-slider');
+        if (heroSlider) {
+            heroSlider.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            heroSlider.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                    const event = new CustomEvent('swipe', {
+                        detail: { direction: diff > 0 ? 'left' : 'right' }
+                    });
+                    heroSlider.dispatchEvent(event);
+                }
+            }
+
+            heroSlider.addEventListener('swipe', function(e) {
+                const alpineComponent = Alpine.$data(heroSlider);
+                if (alpineComponent) {
+                    if (e.detail.direction === 'left') {
+                        alpineComponent.nextSlide();
+                    } else {
+                        alpineComponent.prevSlide();
+                    }
+                }
+            });
+        }
+    }
+
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -20px 0px'
+    };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+            }
+        });
+    }, observerOptions);
+    document.querySelectorAll('.banner-container section').forEach((el, index) => {
+        el.style.setProperty('--animation-delay', `${index * 0.1}s`);
+        observer.observe(el);
+    });
+});
+</script>
+{% endblock %}

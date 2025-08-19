@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  wms_api:
+    build: 
+      context: ./wms_api
+      dockerfile: Dockerfile
+    container_name: wms_api
+    volumes:
+      - wms_api_data:/app/data
+      - wms_api_static:/app/staticfiles
+      - wms_api_media:/app/media
+    env_file:
+      - ./wms_api/.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=wms_api.settings.production
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  wms_frontend:
+    build: 
+      context: ./wms_frontend
+      dockerfile: Dockerfile
+    container_name: wms_frontend
+    volumes:
+      - muziekschool_data:/app/data
+      - muziekschool_static:/app/staticfiles
+      - muziekschool_media:/app/media
+    env_file:
+      - ./wms_frontend/.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=wms_frontend.settings.production
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - wms_api_static:/var/www/wms_api/static
+      - wms_api_media:/var/www/wms_api/media
+      - wms_frontend_static:/var/www/wms_frontend/static
+      - wms_frontend_media:/var/www/wms_frontend/media
+      - certbot_conf:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
+    depends_on:
+      - wms_api
+      - wms_frontend
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot_conf:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
+    command: >
+      certonly --webroot --webroot-path=/var/www/certbot
+      --email ${CERTBOT_EMAIL}
+      --agree-tos --no-eff-email
+      -d ${CERTBOT_DOMAIN}
+      -d www.${CERTBOT_DOMAIN}
+    env_file:
+      - .env
+
+volumes:
+  wms_api_data:
+  wms_api_static:
+  wms_api_media:
+  wms_frontend_data:
+  wms_frontend_static:
+  wms_frontend_media:
+  certbot_conf:
+  certbot_www:
+
+networks:
+  app-network:
+    driver: bridge

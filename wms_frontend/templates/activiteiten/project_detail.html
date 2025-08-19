@@ -1,0 +1,5 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ project.title }} - Wereldmuziekschool{% endblock %}
+{% block content %}
+    {% include 'main/partials/_detail_view.html' with item=project %}
+{% endblock %}

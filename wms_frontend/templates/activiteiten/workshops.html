@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+{% block title %}WMS - Workshops{% endblock %}
+{% block content %}
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Onze Workshops</h1>
+            <p class="text-xl text-gray-600">Leer muziek via een workshop</p>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {% include 'main/partials/cards/courses.html' with items=workshops %}
+        </div>
+
+    </div>
+</section>
+{% endblock %}

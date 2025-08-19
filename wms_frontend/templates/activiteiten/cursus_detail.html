@@ -1,0 +1,5 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ cursus.title }} - Muziekschool{% endblock %}
+{% block content %}
+    {% include 'main/partials/_detail_view.html' with item=cursus %}
+{% endblock %}

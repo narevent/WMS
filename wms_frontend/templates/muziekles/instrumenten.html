@@ -1,0 +1,129 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Instrumenten - Wereldmuziekschool{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
+            Onze Instrumenten
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 animate-slide-up">
+            Ontdek het instrument dat het beste bij je past
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 animate-scale-in">
+            <a href="{% url 'muziekles:tarieven' %}" class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                Bekijk Tarieven
+            </a>
+            <a href="{% url 'muziekles:proefles' %}" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                Proefles Boeken
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Instruments List -->
+<section class="py-12 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if instrumenten %}
+            <ul class="divide-y divide-gray-200 bg-white rounded-lg shadow">
+                {% for instrument in instrumenten %}
+                    <li class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 py-4 hover:bg-gray-50 transition">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-900">{{ instrument.naam }}</h3>
+                            
+                            {% if instrument.beschrijving %}
+                                <p class="text-gray-600 text-sm mt-1 line-clamp-2">
+                                    {{ instrument.beschrijving|safe }}
+                                </p>
+                            {% endif %}
+                            
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                    <i class="fas fa-music mr-1"></i>Muziekles
+                                </span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-secondary-800">
+                                    <i class="fas fa-clock mr-1"></i>Alle niveaus
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 shrink-0">
+                            <a href="{% url 'muziekles:proefles' %}" class="px-3 py-1.5 text-sm bg-primary-600 text-white rounded-md hover:bg-primary-700 transition">
+                                Proefles
+                            </a>
+                            <a href="{% url 'muziekles:inschrijven' %}" class="px-3 py-1.5 text-sm bg-primary-600 text-white rounded-md hover:bg-primary-700 transition">
+                                Inschrijven
+                            </a>
+                            {% if instrument.link %}
+                                <a href="{{ instrument.link }}" target="_blank" class="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition">
+                                    Meer Info
+                                </a>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="text-center py-12">
+                <i class="fas fa-music text-5xl text-gray-400 mb-3"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-1">Geen instrumenten beschikbaar</h3>
+                <p class="text-gray-600 text-sm mb-4">Er zijn momenteel geen instrumenten beschikbaar.</p>
+                <a href="{% url 'main:contact' %}" class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition">
+                    Neem Contact Op
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="bg-primary-600 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-6">Klaar om te beginnen?</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+            Boek een gratis proefles en ontdek welk instrument bij jou past. 
+            Onze ervaren docenten helpen je graag op weg.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'muziekles:proefles' %}" class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-calendar mr-2"></i>
+                Proefles Boeken
+            </a>
+            <a href="{% url 'main:contact' %}" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-envelope mr-2"></i>
+                Contact Opnemen
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .aspect-w-16 {
+        position: relative;
+        width: 100%;
+    }
+    
+    .aspect-h-9 {
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    }
+    
+    .aspect-w-16 > * {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+{% endblock %}

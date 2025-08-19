@@ -1,0 +1,29 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for item in items %}
+        {% if item.type == 'project' %}
+            {% url 'activiteiten:project_detail' item.id as detail_url %}
+        {% elif item.type == 'cursus' %}
+            {% url 'activiteiten:cursus_detail' item.id as detail_url %}
+        {% elif item.type == 'groep' %}
+            {% url 'activiteiten:groep_detail' item.id as detail_url %}
+        {% elif item.type == 'workshop' %}
+            {% url 'activiteiten:workshop_detail' item.id as detail_url %}
+        {% else %}
+            {% url 'main:home' as detail_url %} {# fallback #}
+        {% endif %}
+        <a href="{{ detail_url }}" class="block rounded-lg shadow-lg overflow-hidden hover:shadow-xl transform transition duration-300 hover:scale-105 bg-white">
+            <div class="relative h-48 bg-gray-200">
+                <img src="{{ item.image }}" alt="{{ item.naam }}" class="w-full h-48 object-cover">
+                <div class="absolute top-4 left-4 bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    {% if item.prijs %}
+                        €{{ item.prijs }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ item.naam }}</h3>
+                <div class="text-gray-600 mb-4 line-clamp-3">{{ item.beschrijving|safe }}</div>
+            </div>
+        </a>
+    {% endfor %}
+</div>

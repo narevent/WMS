@@ -1,0 +1,245 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Inschrijven - Wereldmuziekschool{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Inschrijven voor Muziekles</h1>
+            <p class="text-lg text-gray-600">Vul onderstaand formulier in om je aan te melden voor muziekles bij de Wereldmuziekschool</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+            <form method="POST" class="space-y-8 text-gray-900" x-data="{ 
+                sameAsStudent: false,
+                toggleSameAsStudent() {
+                    if (this.sameAsStudent) {
+                        document.getElementById('b_achternaam').value = document.getElementById('achternaam').value;
+                        document.getElementById('initialen').value = document.getElementById('voornaam').value.charAt(0).toUpperCase();
+                    } else {
+                        document.getElementById('b_achternaam').value = '';
+                        document.getElementById('initialen').value = '';
+                    }
+                }
+            }">
+                {% csrf_token %}
+                <div class="border-b border-gray-200 pb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-user mr-2 text-primary-600"></i>
+                        Leerling Gegevens
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="voornaam" class="block text-sm font-medium text-gray-700 mb-2">Voornaam *</label>
+                            <input type="text" id="voornaam" name="voornaam" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="achternaam" class="block text-sm font-medium text-gray-700 mb-2">Achternaam *</label>
+                            <input type="text" id="achternaam" name="achternaam" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="geboortedatum" class="block text-sm font-medium text-gray-700 mb-2">Geboortedatum *</label>
+                            <input type="date" id="geboortedatum" name="geboortedatum" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-mail *</label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="telefoon" class="block text-sm font-medium text-gray-700 mb-2">Telefoon *</label>
+                            <input type="tel" id="telefoon" name="telefoon" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-music mr-2 text-primary-600"></i>
+                        Les Informatie
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="instrument" class="block text-sm font-medium text-gray-700 mb-2">Instrument *</label>
+                            <select id="instrument" name="instrument" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                <option value="">Selecteer een instrument</option>
+                                {% for instrument in instrumenten %}
+                                    <option value="{{ instrument.id }}">{{ instrument.naam }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="lestype" class="block text-sm font-medium text-gray-700 mb-2">Lestype *</label>
+                            <select id="lestype" name="lestype" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                <option value="">Selecteer een lestype</option>
+                                {% for lestype in lestypes %}
+                                    <option value="{{ lestype.id }}">{{ lestype.naam }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="huren" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                <span class="ml-2 text-sm text-gray-700">Ik wil een instrument huren</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-credit-card mr-2 text-primary-600"></i>
+                        Betalingsplichtige Gegevens
+                    </h2>
+                    
+                    <div class="mb-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" x-model="sameAsStudent" @change="toggleSameAsStudent()" 
+                                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                            <span class="ml-2 text-sm text-gray-700">Betalingsplichtige is dezelfde als leerling</span>
+                        </label>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="initialen" class="block text-sm font-medium text-gray-700 mb-2">Initialen *</label>
+                            <input type="text" id="initialen" name="initialen" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="b_achternaam" class="block text-sm font-medium text-gray-700 mb-2">Achternaam *</label>
+                            <input type="text" id="b_achternaam" name="b_achternaam" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="adres" class="block text-sm font-medium text-gray-700 mb-2">Adres *</label>
+                            <input type="text" id="adres" name="adres" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="postcode" class="block text-sm font-medium text-gray-700 mb-2">Postcode *</label>
+                            <input type="text" id="postcode" name="postcode" required pattern="[0-9]{4}[A-Z]{2}"
+                                placeholder="1234AB"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="plaats" class="block text-sm font-medium text-gray-700 mb-2">Plaats *</label>
+                            <input type="text" id="plaats" name="plaats" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="iban" class="block text-sm font-medium text-gray-700 mb-2">IBAN *</label>
+                            <input type="text" id="iban" name="iban" required
+                                placeholder="NL12 ABCD 0123 4567 89"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="haarlempas" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                <span class="ml-2 text-sm text-gray-700">Ik ben in bezit van een Haarlempas</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-file-contract mr-2 text-primary-600"></i>
+                        Algemene Voorwaarden
+                    </h2>
+                    
+                    <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">Belangrijke informatie:</h3>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Lessen worden gegeven volgens het schooljaar (september - juli)</li>
+                            <li>• Opzegging kan alleen aan het einde van een kwartaal met 1 maand opzegtermijn</li>
+                            <li>• Gemiste lessen worden niet vergoed, maar kunnen worden ingehaald</li>
+                            <li>• Betaling geschiedt vooraf per kwartaal via automatische incasso</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-start">
+                            <input type="checkbox" name="akkoord" required class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded mt-1">
+                            <span class="ml-2 text-sm text-gray-700">
+                                Ik ga akkoord met de algemene voorwaarden en het privacybeleid van de Wereldmuziekschool *
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" 
+                        class="bg-primary-600 text-white px-8 py-3 rounded-md font-semibold text-lg hover:bg-primary-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Inschrijving Verzenden
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                    <i class="fas fa-info-circle mr-2 text-primary-600"></i>
+                    Wat gebeurt er nu?
+                </h3>
+                <ul class="text-sm text-gray-700 space-y-2">
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-primary-600 mr-2 mt-1"></i>
+                        <span>Uw inschrijving wordt binnen 2 werkdagen behandeld</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-primary-600 mr-2 mt-1"></i>
+                        <span>U ontvangt een bevestiging per e-mail</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-primary-600 mr-2 mt-1"></i>
+                        <span>Een docent neemt contact met u op voor de eerste les</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                    <i class="fas fa-question-circle mr-2 text-primary-600"></i>
+                    Vragen?
+                </h3>
+                <p class="text-sm text-gray-700 mb-3">
+                    Heeft u vragen over de inschrijving of onze lessen? Neem gerust contact met ons op.
+                </p>
+                <div class="space-y-2 text-sm text-gray-700">
+                    <div class="flex items-center">
+                        <i class="fas fa-phone mr-2 text-primary-600"></i>
+                        <span>{{ contact_info.telefoon }}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-envelope mr-2 text-primary-600"></i>
+                        <span>{{ contact_info.email }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
