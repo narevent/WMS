@@ -30,9 +30,9 @@ services:
       dockerfile: Dockerfile
     container_name: wms_frontend
     volumes:
-      - muziekschool_data:/app/data
-      - muziekschool_static:/app/staticfiles
-      - muziekschool_media:/app/media
+      - wms_frontend_data:/app/data
+      - wms_frontend_static:/app/staticfiles
+      - wms_frontend_media:/app/media
     env_file:
       - ./wms_frontend/.env
     environment:
