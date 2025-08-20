@@ -7,6 +7,11 @@ BRANCH="main"
 
 echo "Starting deployment..."
 
+if ! groups $USER | grep &>/dev/null '\bdocker\b'; then
+    echo "Warning: Current user is not in the docker group."
+    echo "You may need to run this script with sudo or add user to docker group."
+fi
+
 mkdir -p "$PROJECT_DIR"
 cd "$PROJECT_DIR"
 
@@ -24,26 +29,27 @@ git checkout "$BRANCH"
 echo "Current commit: $(git rev-parse HEAD)"
 
 echo "Stopping existing containers..."
-docker-compose down
+docker compose down
+
+echo "Pruning unused Docker resources..."
+docker system prune -f
 
 echo "Building containers..."
-docker-compose build --no-cache
+docker compose build --no-cache
 
 echo "Starting containers..."
-docker-compose up -d
+docker compose up -d
 
 echo "Waiting for containers to start..."
 sleep 30
 
 echo "Running migrations..."
-docker-compose exec -T wms_api python manage.py migrate
-docker-compose exec -T wms_frontend python manage.py migrate
+docker compose exec -T wms_api python manage.py migrate
+docker compose exec -T wms_frontend python manage.py migrate
 
 echo "Collecting static files..."
-docker-compose exec -T wms_api python manage.py collectstatic --noinput
-docker-compose exec -T wms_frontend python manage.py collectstatic --noinput
-
-echo "Deployment completed successfully!"
+docker compose exec -T wms_api python manage.py collectstatic --noinput
+docker compose exec -T wms_frontend python manage.py collectstatic --noinput
 
 echo "Deployment completed successfully!"
 echo ""
