@@ -2,7 +2,7 @@
 # deploy.sh
 
 REPO_URL="https://github.com/narevent/WMS.git"
-PROJECT_DIR="/home/deploy/apps"
+PROJECT_DIR="/home/deploy/apps/WMS"
 BRANCH="main"
 
 echo "Starting deployment..."
