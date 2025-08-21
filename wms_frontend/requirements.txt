@@ -1,4 +1,4 @@
 Django==4.2
 python-decouple==3.8
 Requests==2.32.5
-django-filters==25.1
+django-filter==25.1
