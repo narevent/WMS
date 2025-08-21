@@ -48,8 +48,8 @@ docker compose exec -T wms_api python manage.py migrate
 docker compose exec -T wms_frontend python manage.py migrate
 
 echo "Collecting static files..."
-docker compose exec -T wms_api python manage.py collectstatic --noinput
-docker compose exec -T wms_frontend python manage.py collectstatic --noinput
+docker compose exec -T wms_api python manage.py collectstatic
+docker compose exec -T wms_frontend python manage.py collectstatic
 
 echo "Deployment completed successfully!"
 echo ""
