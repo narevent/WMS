@@ -2,7 +2,7 @@
 # ssl-setup.sh - Run this ONCE after initial deployment
 
 PROJECT_DIR="/home/deploy/apps/WMS"  # Adjust to match your deploy script
-DOMAIN="trackisolator.com"  # Replace with your actual domain
+DOMAIN="wms.trackisolator.com"  # Replace with your actual domain
 
 echo "Setting up SSL certificates for $DOMAIN..."
 
