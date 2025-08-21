@@ -1,9 +1,10 @@
-FROM python:3.9.2-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     gcc \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
@@ -13,7 +14,7 @@ COPY . .
 
 RUN mkdir -p /app/data
 
-RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --nointext
 
 EXPOSE 8001
 
