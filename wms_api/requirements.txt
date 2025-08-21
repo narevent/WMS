@@ -3,4 +3,5 @@ Django==4.2
 django_filebrowser==4.0.3
 Pillow==11.3.0
 python-decouple==3.8
-Requests==2.32.4
+Requests==2.32.5
+djangorestframework==3.16.1
