@@ -23,8 +23,7 @@ docker-compose run --rm certbot certonly \
   --email admin@$DOMAIN \
   --agree-tos \
   --no-eff-email \
-  -d $DOMAIN \
-  -d www.$DOMAIN
+  -d $DOMAIN
 
 if [ $? -eq 0 ]; then
     echo "SSL certificate obtained successfully!"
