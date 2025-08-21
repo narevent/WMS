@@ -14,7 +14,7 @@ COPY . .
 
 RUN mkdir -p /app/data
 
-RUN python manage.py collectstatic --nointext
+RUN python manage.py collectstatic
 
 EXPOSE 8001
 
