@@ -28,7 +28,7 @@ cd "$PROJECT_DIR"
 
 # Check if domain resolves to this server
 echo "Checking domain resolution..."
-SERVER_IP=$(curl -s ifconfig.me)
+SERVER_IP=$(curl -4 -s ifconfig.me)
 DOMAIN_IP=$(dig +short $DOMAIN)
 
 echo "Server IP: $SERVER_IP"
