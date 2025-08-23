@@ -3,11 +3,20 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import re_path
 from django.views.static import serve
+from django.http import JsonResponse
 from django.urls import path, include
 from .api_root import api_root
 from filebrowser.sites import site
 
+def health_check(request):
+    """Health check endpoint for load balancer"""
+    return JsonResponse({
+        "status": "healthy",
+        "service": "wms_api"
+    })
+
 urlpatterns = [
+    path('health/', health_check, name='health'),
     path('admin/filebrowser/', site.urls),  # FileBrowser URLs
     path("admin/", admin.site.urls),
     path("api/", api_root),  # custom root
