@@ -41,16 +41,25 @@ echo "Starting containers..."
 docker compose up -d
 
 echo "Waiting for containers to start..."
-sleep 30
+sleep 45
+
+echo "Checking container health..."
+docker compose ps
 
 echo "Running migrations..."
-docker compose exec -T wms_api python manage.py migrate
-docker compose exec -T wms_frontend python manage.py migrate
+docker compose exec -T wms_api python manage.py migrate --noinput
+docker compose exec -T wms_frontend python manage.py migrate --noinput
 
 echo "Collecting static files..."
-docker compose exec -T wms_api python manage.py collectstatic
-docker compose exec -T wms_frontend python manage.py collectstatic
+docker compose exec -T wms_api python manage.py collectstatic --noinput
+docker compose exec -T wms_frontend python manage.py collectstatic --noinput
 
-echo "Deployment completed successfully!"
+echo "Testing health endpoints..."
+sleep 10
+docker compose exec nginx curl -f http://wms_api:8000/health/ || echo "WARNING: API health check failed"
+docker compose exec nginx curl -f http://wms_frontend:8001/health/ || echo "WARNING: Frontend health check failed"
+
+echo "Deployment completed!"
 echo ""
+echo "If you're still getting 502 errors, run the debug script to investigate further."
 echo "Note: If this is your first deployment, run './ssl-setup.sh' to configure SSL certificates."
