@@ -5,11 +5,11 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config("SECRET_KEY", default="django-insecure-change-me")
-DEBUG = config("DEBUG", default=False, cast=bool)
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=list)
+SECRET_KEY = "django-insecure-change-me"
+DEBUG = True
+ALLOWED_HOSTS = ['*']
 
-API_BASE_URL = config("API_BASE_URL", default="http://localhost:8000/api/")
+API_BASE_URL = "http://localhost:8000/api/"
 
 KNACK_MAIL = config("KNACK_MAIL")
 KNACK_PASS = config("KNACK_PASS")
