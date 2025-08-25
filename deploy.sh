@@ -41,7 +41,7 @@ echo "Starting containers..."
 docker compose up -d
 
 echo "Waiting for containers to start..."
-sleep 45
+sleep 10
 
 echo "Checking container health..."
 docker compose ps
