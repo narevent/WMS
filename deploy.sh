@@ -61,5 +61,4 @@ docker compose exec nginx curl -f http://wms_frontend:8001/health/ || echo "WARN
 
 echo "Deployment completed!"
 echo ""
-echo "If you're still getting 502 errors, run the debug script to investigate further."
 echo "Note: If this is your first deployment, run './ssl-setup.sh' to configure SSL certificates."
