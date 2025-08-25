@@ -21,10 +21,10 @@ DATABASES = {
     }
 }
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/api/'
 STATIC_ROOT = '/app/staticfiles/'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/api/'
 MEDIA_ROOT = '/app/media/'
 
 CORS_ALLOW_ALL_ORIGINS = True
