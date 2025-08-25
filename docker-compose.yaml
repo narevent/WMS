@@ -59,7 +59,6 @@ services:
       - wms_api_static:/var/www/wms_api/static
       - wms_api_media:/var/www/wms_api/media
       - wms_frontend_static:/var/www/wms_frontend/static
-      - wms_frontend_media:/var/www/wms_frontend/media
       - certbot_conf:/etc/letsencrypt
       - certbot_www:/var/www/certbot
     depends_on:
