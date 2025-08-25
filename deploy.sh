@@ -56,8 +56,8 @@ docker compose exec -T wms_frontend python manage.py collectstatic --noinput
 
 echo "Testing health endpoints..."
 sleep 10
-docker compose exec nginx curl -f http://wms_api:8000/health/ || echo "WARNING: API health check failed"
-docker compose exec nginx curl -f http://wms_frontend:8001/health/ || echo "WARNING: Frontend health check failed"
+docker compose exec nginx curl -f http://wms.trackisolator.com/api/health/ || echo "WARNING: API health check failed"
+docker compose exec nginx curl -f http://wms.trackisolator.com/health/ || echo "WARNING: Frontend health check failed"
 
 echo "Deployment completed!"
 echo ""
