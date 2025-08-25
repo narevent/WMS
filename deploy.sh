@@ -47,12 +47,12 @@ echo "Checking container health..."
 docker compose ps
 
 echo "Running migrations..."
-docker compose exec -T wms_api python manage.py migrate --noinput
-docker compose exec -T wms_frontend python manage.py migrate --noinput
+docker compose exec -T wms_api python manage.py migrate --noinput --settings=wms_api.settings.production
+docker compose exec -T wms_frontend python manage.py migrate --noinput --settings=wms_api.settings.production
 
 echo "Collecting static files..."
-docker compose exec -T wms_api python manage.py collectstatic --noinput
-docker compose exec -T wms_frontend python manage.py collectstatic --noinput
+docker compose exec -T wms_api python manage.py collectstatic --noinput --settings=wms_api.settings.production
+docker compose exec -T wms_frontend python manage.py collectstatic --noinput --settings=wms_api.settings.production
 
 echo "Testing health endpoints..."
 sleep 10
