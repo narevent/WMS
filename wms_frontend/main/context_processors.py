@@ -13,10 +13,6 @@ def branding_context(request):
         assets = response_results[0] if response_assets.status_code == 200 and response_results else {}
         design = design_results[0] if response_design.status_code == 200 and design_results else {}
 
-        for key, value in assets.items():
-            if isinstance(value, str) and value.startswith('/media/'):
-                assets[key] = value.replace('/media/', '/media/api/')
-
     except Exception:
         assets = {}
         design = {}
