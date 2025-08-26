@@ -8,6 +8,7 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default='localhost').split(',')
 
 API_BASE_URL = config("API_BASE_URL", default="http://localhost:8000/api/")
+DOMAIN_URL = config("DOMAIN_URL", default="http://localhost:8000/")
 
 DATABASES = {
     'default': {

@@ -10,7 +10,7 @@ def branding_context(request):
             'password': settings.DJANGO_PASSWORD
         }
         session = requests.Session()
-        login_response = session.post(f"{settings.API_BASE_URL}auth/login/", data=auth_data)
+        login_response = session.post(f"{settings.DOMAIN_URL}admin/", data=auth_data)
         
         if login_response.status_code == 200:
             response_assets = session.get(f"{settings.API_BASE_URL}branding/assets/")
