@@ -10,7 +10,7 @@ env/
 *.sqlite3
 staticfiles/
 media/
-.pickle
+*.pickle
 
 # Environment variables
 .env
