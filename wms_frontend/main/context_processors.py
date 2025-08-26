@@ -5,6 +5,7 @@ from django.core.cache import cache
 
 def branding_context(request):
     try:
+        print(f"{settings.API_BASE_URL}branding/assets/")
         response_assets = requests.get(f"{settings.API_BASE_URL}branding/assets/")
         response_design = requests.get(f"{settings.API_BASE_URL}branding/design/")
         response_results = response_assets.json()['results']
