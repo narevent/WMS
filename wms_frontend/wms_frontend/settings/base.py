@@ -80,3 +80,6 @@ USE_I18N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DJANGO_USERNAME = config("DJANGO_USERNAME")
+DJANGO_PASSWORD = config("DJANGO_PASSWORD")
