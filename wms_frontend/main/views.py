@@ -20,7 +20,6 @@ def get_banners(banner_type='nieuws'):
             b['items'] = get_api_data('agenda/events/?ordering=datum')[:6]
         elif b['banner_type'] == 'sponsor':
             b['items'] = get_api_data('stichting/sponsors/')
-            print(b['items'])
         elif b['banner_type'] == 'projecten':
             cursussen = get_api_data('activiteiten/cursussen/')
             workshops = get_api_data('activiteiten/workshops/')

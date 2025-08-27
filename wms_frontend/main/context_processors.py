@@ -5,18 +5,8 @@ from django.core.cache import cache
 
 def branding_context(request):
     try:
-        auth_data = {
-            'username': settings.DJANGO_USERNAME,
-            'password': settings.DJANGO_PASSWORD
-        }
-        session = requests.Session()
-        login_response = session.post(f"{settings.DOMAIN_URL}admin/", data=auth_data)
-        
-        if login_response.status_code == 200:
-            response_assets = session.get(f"{settings.API_BASE_URL}branding/assets/")
-            response_design = session.get(f"{settings.API_BASE_URL}branding/design/")
-        else:
-            return {"branding_assets": {}, "design_patterns": {}}
+        response_assets = requests.get(f"{settings.API_BASE_URL}branding/assets/")
+        response_design = requests.get(f"{settings.API_BASE_URL}branding/design/")
         
         response_results = response_assets.json()['results']
         design_results = response_design.json()['results']
