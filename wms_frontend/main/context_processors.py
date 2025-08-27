@@ -40,7 +40,8 @@ def contact_info(request):
         try:
             response = requests.get(f'{settings.API_BASE_URL}muziekschool/contact/')
             if response.status_code == 200:
-                contact = response.json()['results'][0]
+                contact_response = response.json()['results']
+                contact = contact_response[0] if contact_response else {}
                 cache.set('contact_info', contact, 3600)  # cache for 1h
             else:
                 contact = None
