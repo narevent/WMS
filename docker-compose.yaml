@@ -7,7 +7,7 @@ services:
     volumes:
       - wms_api_data:/app/data
       - wms_api_static:/var/www/wms_api/static
-      - wms_api_media:/var/www/wms_api/media
+      - wms_api_media:/app/media
     env_file:
       - ./wms_api/.env
     environment:
