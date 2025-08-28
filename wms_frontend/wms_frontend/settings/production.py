@@ -19,7 +19,7 @@ DATABASES = {
 STATIC_URL = '/static/'
 STATIC_ROOT = '/app/staticfiles/'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/api/'
 MEDIA_ROOT = '/app/media/'
 
 # Security settings for production
