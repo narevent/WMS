@@ -6,7 +6,7 @@ from tinymce.models import HTMLField
 
 class Post(models.Model):
     titel = models.CharField(max_length=100)
-    image = models.ImageField(default="default.jpg", upload_to="agenda", blank=True, null=True)
+    image = models.ImageField(upload_to="agenda", blank=True, null=True)
     content = HTMLField()
 
     created_at = models.DateTimeField(auto_now_add=True)
