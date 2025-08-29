@@ -10,7 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Shared settings between development and production
 INSTALLED_APPS = [
-    'grappelli',
     'filebrowser',
 
     "django.contrib.admin",
@@ -19,7 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
+
     "rest_framework",
     "django_filters",
     "corsheaders",
