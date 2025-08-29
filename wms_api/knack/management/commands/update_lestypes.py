@@ -10,7 +10,7 @@ class Command(BaseCommand):
         lestypes = get_records('Lestypes')
         for lestype in lestypes:
             lesvorm = lestype['field_60']
-            lesvorm = lesvorm[0].upper() + lesvorm[1:]
+            #lesvorm = lesvorm[0].upper() + lesvorm[1:]
             price_ex = lestype['field_66']
             tax = price_ex * 0.21
             price_inc = price_ex + tax

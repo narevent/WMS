@@ -17,6 +17,7 @@ URL_RECORDS = URL_POST + '?format=raw&rows_per_page=1000&page=%d'
 END_POINTS = {
     "Instruments": {'get': (148, 228)},
     "Lestypes": {'get': (148, 229)},
+    "Zalen": {'get': (148, 230)},
 }
 
 def get_header(token: str) -> Dict[str, str]:
@@ -82,6 +83,29 @@ def post_api_data(endpoint, data):
         headers = get_django_auth_headers()
         response = requests.post(f"{settings.API_BASE_URL}{endpoint}/", json=data, headers=headers)
         return response
+    except requests.RequestException as e:
+        print(f"Request failed: {e}")
+        return None
+    
+def get_or_create_api_data(endpoint, data):
+    try:
+        headers = get_django_auth_headers()
+        print(f"Attempting to GET resource from {endpoint} with data: {data}...")
+        get_response = requests.get(f"{settings.API_BASE_URL}{endpoint}/", params=data, headers=headers)
+
+        if get_response.status_code == 200:
+            print("Resource found. Returning existing resource.")
+            return get_response
+        elif get_response.status_code == 404:
+            print("Resource not found (404). Proceeding to create it with POST request...")
+            post_response = post_api_data(f"{settings.API_BASE_URL}{endpoint}/", json=data)
+            post_response.raise_for_status()
+            print("Resource successfully created.")
+            return post_response
+        else:
+            print(f"Unexpected status code for GET request: {get_response.status_code}")
+            get_response.raise_for_status()
+            
     except requests.RequestException as e:
         print(f"Request failed: {e}")
         return None

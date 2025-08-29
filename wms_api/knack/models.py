@@ -59,7 +59,7 @@ class LesTarief(models.Model):
 class Locatie(models.Model):
     naam = models.CharField(max_length=128)
     adres = models.CharField(max_length=128)
-    kaart = models.URLField(blank=True)
+    kaart = models.URLField(max_length=256, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -10,7 +10,7 @@ class Command(BaseCommand):
         instruments = get_records("Instruments")
         for instrument in instruments:
             instr = instrument['field_35']
-            instr = instr[0].upper() + instr[1:]
+            #instr = instr[0].upper() + instr[1:]
             data = {'naam': instr}
             response = post_api_data('knack/instrumenten', data)
             if response:
