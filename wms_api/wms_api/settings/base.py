@@ -129,6 +129,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "statusbar": True,
     'convert_urls': False,
     'relative_urls': False,
+    "file_browser_callback": None,
 }
 
 FILEBROWSER_DIRECTORY = ''
