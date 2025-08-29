@@ -28,7 +28,7 @@ urlpatterns = [
     path("api/knack/", include("knack.urls")),
     path("api/muziekschool/", include("muziekschool.urls")),
     path("api/stichting/", include("stichting.urls")),
-    path("tinymce/", include("tinymce.urls")),
+    #path("tinymce/", include("tinymce.urls")),
     path('tinymce-upload/', views.tinymce_upload, name='tinymce-upload'),
 ]
 
