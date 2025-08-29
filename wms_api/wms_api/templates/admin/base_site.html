@@ -3,63 +3,55 @@
 
 {% block extrahead %}
     {{ block.super }}
+    <!-- Load TinyMCE -->
+    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof tinymce !== 'undefined') {
-                tinymce.on('AddEditor', function(e) {
-                    console.log('TinyMCE editor added, setting up FileBrowser integration');
-                    e.editor.on('init', function() {
-                        setupFileBrowserIntegration(e.editor);
+        document.addEventListener("DOMContentLoaded", function() {
+            tinymce.init({
+                selector: 'textarea',   // or '.tinymce' if you only want specific fields
+                height: 400,
+                menubar: false,
+                plugins: 'link image code',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright | customimage customlink | code',
+                setup: function(editor) {
+                    // FileBrowser buttons
+                    editor.ui.registry.addButton('customimage', {
+                        icon: 'image',
+                        tooltip: 'Insert image',
+                        onAction: function() {
+                            openFileBrowser('Image', function(url) {
+                                editor.insertContent('<img src="' + url + '" />');
+                            });
+                        }
                     });
-                });
-            }
+                    editor.ui.registry.addButton('customlink', {
+                        icon: 'link',
+                        tooltip: 'Insert link',
+                        onAction: function() {
+                            openFileBrowser('Document', function(url) {
+                                var selectedText = editor.selection.getContent({format: 'text'}) || 'Link';
+                                editor.insertContent('<a href="' + url + '">' + selectedText + '</a>');
+                            });
+                        }
+                    });
+                }
+            });
         });
 
-        function setupFileBrowserIntegration(editor) {
-            console.log('Setting up FileBrowser integration for editor:', editor.id);
-            editor.ui.registry.addButton('customimage', {
-                icon: 'image',
-                tooltip: 'Insert/edit image',
-                onAction: function() {
-                    openFileBrowser('image', function(url) {
-                        editor.insertContent('<img src="' + url + '" alt="" />');
-                    });
-                }
-            });
-
-            editor.ui.registry.addButton('customlink', {
-                icon: 'link', 
-                tooltip: 'Insert/edit link',
-                onAction: function() {
-                    openFileBrowser('file', function(url) {
-                        var selectedText = editor.selection.getContent({format: 'text'});
-                        var linkText = selectedText || 'Link';
-                        editor.insertContent('<a href="' + url + '">' + linkText + '</a>');
-                    });
-                }
-            });
-        }
-
         function openFileBrowser(type, callback) {
-            var cmsURL = '/admin/filebrowser/browse/?pop=2';
-            if (type === 'image') {
-                cmsURL += '&type=Image';
-            } else {
-                cmsURL += '&type=Document';
-            }
-            
-            console.log('Opening FileBrowser:', cmsURL);
-            var popup = window.open(
-                cmsURL,
+            let fb = window.open(
+                '/admin/filebrowser/browse/?pop=2&type=' + type,
                 'filebrowser',
-                'width=980,height=500,scrollbars=yes,resizable=yes'
+                'width=980,height=600,scrollbars=yes,resizable=yes'
             );
             
-            var checkClosed = setInterval(function() {
-                if (popup.closed) {
-                    clearInterval(checkClosed);
+            // filebrowser.js already sets window.opener.FileBrowserDialogue
+            window.FileBrowserDialogue = {
+                fileSubmit: function(url) {
+                    callback(url);
+                    fb.close();
                 }
-            }, 1000);
+            };
         }
     </script>
 {% endblock %}
