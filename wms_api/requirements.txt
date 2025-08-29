@@ -1,5 +1,6 @@
 dj_database_url==3.0.0
 Django==4.2
+django-grappelli==4.0.2
 django_filebrowser==4.0.3
 Pillow==11.3.0
 python-decouple==3.8
