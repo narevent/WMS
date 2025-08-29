@@ -107,35 +107,27 @@ TINYMCE_DEFAULT_CONFIG = {
     "theme": "silver",
     "plugins": """
             textcolor save link image media preview codesample contextmenu
-            table code lists fullscreen  insertdatetime  nonbreaking
+            table code lists fullscreen insertdatetime nonbreaking
             contextmenu directionality searchreplace wordcount visualblocks
-            visualchars code fullscreen autolink lists  charmap print  hr
+            visualchars code fullscreen autolink lists charmap print hr
             anchor pagebreak
             """,
     "toolbar1": """
             fullscreen preview bold italic underline | fontselect,
-            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            fontsizeselect | forecolor backcolor | alignleft alignright |
             aligncenter alignjustify | indent outdent | bullist numlist table |
             | link image media | codesample |
             """,
     "toolbar2": """
             visualblocks visualchars |
-            charmap hr pagebreak nonbreaking anchor |  code |
+            charmap hr pagebreak nonbreaking anchor | code |
             """,
     "contextmenu": "formats | link image",
     "menubar": True,
     "statusbar": True,
 
-    # FileBrowser integration
-    'file_picker_callback': 'djangoFileBrowser',
-    'convert_urls': False,
-    'relative_urls': False,
-
-    'external_filemanager_path': '/admin/filebrowser/browse/?pop=2',
-    'filemanager_title': 'FileBrowser',
-    'external_plugins': {
-        'filemanager': '/static/filebrowser/js/filemanager.js'  # Make sure this path exists
-    }
+    "file_picker_types": "image",
+    "images_upload_url": "/api/tinymce-upload/",  # You'll need to create this endpoint
 }
 
 FILEBROWSER_DIRECTORY = ''

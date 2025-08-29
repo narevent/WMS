@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.urls import path, include
 from .api_root import api_root
 from filebrowser.sites import site
+from . import views
 
 def health_check(request):
     """Health check endpoint for load balancer"""
@@ -28,14 +29,13 @@ urlpatterns = [
     path("api/muziekschool/", include("muziekschool.urls")),
     path("api/stichting/", include("stichting.urls")),
     path("tinymce/", include("tinymce.urls")),
+    path('tinymce-upload/', views.tinymce_upload, name='tinymce-upload'),
 ]
 
-# Serve media and static files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 else:
-    # For production, use re_path with serve view
     urlpatterns += [
         re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
         re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
