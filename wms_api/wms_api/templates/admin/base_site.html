@@ -5,22 +5,41 @@
     {{ block.super }}
     <script type="text/javascript" src="{% static 'filebrowser/js/AddFileBrowser.js' %}"></script>
     <script>
-        // Debug: Check if function exists
-        console.log('djangoFileBrowser function:', typeof djangoFileBrowser);
+        console.log('TinyMCE loaded, checking for FileBrowser integration...');
         
-        // Manual function definition for TinyMCE 5+
-        if (typeof djangoFileBrowser === 'undefined') {
-            function djangoFileBrowser(callback, value, meta) {
-                var cmsURL = '/admin/filebrowser/browse/?pop=2';
-                cmsURL = cmsURL + "&type=" + meta.filetype;
-                
-                tinymce.activeEditor.windowManager.openUrl({
-                    url: cmsURL,
-                    title: 'FileBrowser',
-                    width: 980,
-                    height: 500,
-                });
+        // Modern TinyMCE 5+ callback function
+        function djangoFileBrowser(callback, value, meta) {
+            console.log('FileBrowser callback triggered with meta:', meta);
+            
+            var cmsURL = '/admin/filebrowser/browse/?pop=2';
+            
+            // Add type parameter based on what TinyMCE is asking for
+            if (meta.filetype === 'image') {
+                cmsURL += '&type=Image';
+            } else if (meta.filetype === 'media') {
+                cmsURL += '&type=Video';
+            } else {
+                cmsURL += '&type=Document';
             }
+            
+            console.log('Opening FileBrowser at:', cmsURL);
+            
+            // Open the FileBrowser in a popup
+            tinymce.activeEditor.windowManager.openUrl({
+                url: cmsURL,
+                title: 'FileBrowser',
+                width: 980,
+                height: 500,
+            }, {
+                onMessage: function(dialogApi, details) {
+                    console.log('FileBrowser returned:', details);
+                    // Handle the file selection
+                    if (details.mceAction === 'fileSelected') {
+                        callback(details.data.src);
+                        dialogApi.close();
+                    }
+                }
+            });
         }
     </script>
 {% endblock %}

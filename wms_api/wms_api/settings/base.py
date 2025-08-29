@@ -105,18 +105,19 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 20,
     "selector": "textarea",
     "theme": "silver",
- 
+    
     "plugins": """
             save link image media preview codesample
             table code lists fullscreen insertdatetime nonbreaking
             directionality searchreplace wordcount visualblocks
             visualchars fullscreen autolink charmap anchor pagebreak
             """,
-
+    
     "toolbar1": """
             fullscreen preview bold italic underline | fontselect
-            fontsizeselect | alignleft alignright aligncenter alignjustify | 
-            indent outdent | bullist numlist table | link image media | codesample
+            fontsizeselect | forecolor backcolor | alignleft alignright 
+            aligncenter alignjustify | indent outdent | bullist numlist 
+            table | link image media | codesample
             """,
     
     "toolbar2": """
@@ -130,7 +131,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'file_picker_callback': 'djangoFileBrowser',
     'convert_urls': False,
     'relative_urls': False,
-    'remove_script_host': False,
 }
 
 FILEBROWSER_DIRECTORY = ''
