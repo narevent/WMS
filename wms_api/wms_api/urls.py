@@ -28,8 +28,6 @@ def tinymce_filebrowser_redirect(request):
 urlpatterns = [
     path('health/', health_check, name='health'),
     path('admin/filebrowser/', site.urls),
-    path('tinymce/filebrowser/', tinymce_filebrowser_redirect),
-    path("tinymce/", include("tinymce.urls")),
     path("admin/", admin.site.urls),
     path("api/", api_root),  # custom root
     path('api/branding/', include('branding.urls')),
@@ -39,7 +37,6 @@ urlpatterns = [
     path("api/knack/", include("knack.urls")),
     path("api/muziekschool/", include("muziekschool.urls")),
     path("api/stichting/", include("stichting.urls")),
-    path('tinymce-upload/', views.tinymce_upload, name='tinymce-upload'),
 ]
 
 if settings.DEBUG:
