@@ -47,7 +47,7 @@ class Project(models.Model):
     prijs = models.FloatField()
     duur = models.CharField(max_length=128)
     link = models.URLField(null=True, blank=True)
-    image = models.ImageField(default="default.jpg", upload_to="project")
+    image = models.ImageField(default="branding/default.jpg", upload_to="project")
     start = models.DateField()
     end = models.DateField()
 
