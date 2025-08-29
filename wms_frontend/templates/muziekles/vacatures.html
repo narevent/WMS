@@ -17,7 +17,9 @@
                         <h3 class="text-2xl font-semibold mb-2">{{ vacature.functie }}</h3>
                         <div class="flex items-center space-x-4 text-gray-600">
                             {% if vacature.instrumenten %}
-                            <span class="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm">{{ vacature.instrumenten }}</span>
+                                {% for instrument in vacature.instrumenten %}
+                                    <span class="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm">{{ instrument.naam }}</span>
+                                {% endfor %}
                             {% endif %}
                             {% if vacature.uren %}
                             <span>{{ vacature.uren }} uur per week</span>
@@ -41,7 +43,9 @@
                     <h4 class="font-semibold text-gray-900 mb-2">Wat wij zoeken:</h4>
                     <p class="font-semibold text-gray-900 mb-2">Beheerst de volgende instrumenten:</p>
                     <div class="text-gray-600">
-                        {{ vacature.instrumenten|linebreaks }}
+                        {% for instrument in vacature.instrumenten %}
+                            {{ instrument.naam|linebreaks }}
+                        {% endfor %}
                     </div>
                 </div>
                 {% endif %}
