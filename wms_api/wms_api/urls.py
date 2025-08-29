@@ -28,7 +28,8 @@ def tinymce_filebrowser_redirect(request):
 urlpatterns = [
     path('health/', health_check, name='health'),
     path('admin/filebrowser/', site.urls),
-    path('tinymce/filebrowser/', tinymce_filebrowser_redirect),
+    path("admin/filebrowser/", site.urls),
+    path("grappelli/", include("grappelli.urls")),
     path("tinymce/", include("tinymce.urls")),
     path("admin/", admin.site.urls),
     path("api/", api_root),  # custom root
