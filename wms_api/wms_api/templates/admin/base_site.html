@@ -3,43 +3,63 @@
 
 {% block extrahead %}
     {{ block.super }}
-    <script type="text/javascript" src="{% static 'filebrowser/js/AddFileBrowser.js' %}"></script>
     <script>
-        console.log('TinyMCE loaded, checking for FileBrowser integration...');
-        
-        // Modern TinyMCE 5+ callback function
-        function djangoFileBrowser(callback, value, meta) {
-            console.log('FileBrowser callback triggered with meta:', meta);
-            
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof tinymce !== 'undefined') {
+                tinymce.on('AddEditor', function(e) {
+                    console.log('TinyMCE editor added, setting up FileBrowser integration');
+                    e.editor.on('init', function() {
+                        setupFileBrowserIntegration(e.editor);
+                    });
+                });
+            }
+        });
+
+        function setupFileBrowserIntegration(editor) {
+            console.log('Setting up FileBrowser integration for editor:', editor.id);
+            editor.ui.registry.addButton('customimage', {
+                icon: 'image',
+                tooltip: 'Insert/edit image',
+                onAction: function() {
+                    openFileBrowser('image', function(url) {
+                        editor.insertContent('<img src="' + url + '" alt="" />');
+                    });
+                }
+            });
+
+            editor.ui.registry.addButton('customlink', {
+                icon: 'link', 
+                tooltip: 'Insert/edit link',
+                onAction: function() {
+                    openFileBrowser('file', function(url) {
+                        var selectedText = editor.selection.getContent({format: 'text'});
+                        var linkText = selectedText || 'Link';
+                        editor.insertContent('<a href="' + url + '">' + linkText + '</a>');
+                    });
+                }
+            });
+        }
+
+        function openFileBrowser(type, callback) {
             var cmsURL = '/admin/filebrowser/browse/?pop=2';
-            
-            // Add type parameter based on what TinyMCE is asking for
-            if (meta.filetype === 'image') {
+            if (type === 'image') {
                 cmsURL += '&type=Image';
-            } else if (meta.filetype === 'media') {
-                cmsURL += '&type=Video';
             } else {
                 cmsURL += '&type=Document';
             }
             
-            console.log('Opening FileBrowser at:', cmsURL);
+            console.log('Opening FileBrowser:', cmsURL);
+            var popup = window.open(
+                cmsURL,
+                'filebrowser',
+                'width=980,height=500,scrollbars=yes,resizable=yes'
+            );
             
-            // Open the FileBrowser in a popup
-            tinymce.activeEditor.windowManager.openUrl({
-                url: cmsURL,
-                title: 'FileBrowser',
-                width: 980,
-                height: 500,
-            }, {
-                onMessage: function(dialogApi, details) {
-                    console.log('FileBrowser returned:', details);
-                    // Handle the file selection
-                    if (details.mceAction === 'fileSelected') {
-                        callback(details.data.src);
-                        dialogApi.close();
-                    }
+            var checkClosed = setInterval(function() {
+                if (popup.closed) {
+                    clearInterval(checkClosed);
                 }
-            });
+            }, 1000);
         }
     </script>
 {% endblock %}

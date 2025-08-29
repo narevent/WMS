@@ -127,8 +127,6 @@ TINYMCE_DEFAULT_CONFIG = {
     
     "menubar": True,
     "statusbar": True,
-
-    'file_picker_callback': 'djangoFileBrowser',
     'convert_urls': False,
     'relative_urls': False,
 }
