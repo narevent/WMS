@@ -12,28 +12,29 @@ def custom_server_error_view(request):
 def get_banners(banner_type='nieuws'):
     banners = get_api_data('muziekschool/banners/')  # each banner has titel, info, background_image, type
     banners_select = [b for b in banners if b['banner_type'] == banner_type]
+    banners_select = sorted(banners_select, key='priority')
 
-    for b in banners_select:
-        if b['banner_type'] == 'nieuws':
-            b['items'] = get_api_data('agenda/posts/?ordering=updated_at')[:6]
-        elif b['banner_type'] == 'events':
-            b['items'] = get_api_data('agenda/events/?ordering=datum')[:6]
-        elif b['banner_type'] == 'sponsor':
-            b['items'] = get_api_data('stichting/sponsors/')
-        elif b['banner_type'] == 'projecten':
+    for banner in banners_select:
+        if banner['banner_type'] == 'nieuws':
+            banner['items'] = get_api_data('agenda/posts/?ordering=updated_at')[:6]
+        elif banner['banner_type'] == 'events':
+            banner['items'] = get_api_data('agenda/events/?ordering=datum')[:6]
+        elif banner['banner_type'] == 'sponsor':
+            banner['items'] = get_api_data('stichting/sponsors/')
+        elif banner['banner_type'] == 'projecten':
             cursussen = get_api_data('activiteiten/cursussen/')
             workshops = get_api_data('activiteiten/workshops/')
             projecten = get_api_data('activiteiten/projecten/')
             groepen = get_api_data('activiteiten/cursussen/')
-            for c in cursussen:
-                c['type'] = 'cursus'
-            for w in workshops:
-                w['type'] = 'workshop'
-            for p in projecten:
-                p['type'] = 'project'
-            for g in groepen:
-                g['type'] = 'groep'
-            b['items'] = (cursussen + workshops + projecten + groepen)[:6]
+            for cursus in cursussen:
+                cursus['type'] = 'cursus'
+            for workshop in workshops:
+                workshop['type'] = 'workshop'
+            for project in projecten:
+                project['type'] = 'project'
+            for groep in groepen:
+                groep['type'] = 'groep'
+            banner['items'] = (cursussen + workshops + projecten + groepen)[:6]
 
     return banners_select
 

@@ -85,6 +85,7 @@ class Banner(BaseModel):
     info = HTMLField()
     background_image = models.ImageField(upload_to="banners", null=True, blank=True)
     banner_type = models.CharField(max_length=32, blank=True)
+    priority = models.IntegerField(default=0, help_text="Volgorde homepage")
 
     class Meta:
         verbose_name = "Banner"
