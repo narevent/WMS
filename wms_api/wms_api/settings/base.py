@@ -47,7 +47,7 @@ ROOT_URLCONF = "wms_api.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -126,8 +126,12 @@ TINYMCE_DEFAULT_CONFIG = {
     "menubar": True,
     "statusbar": True,
 
-    "file_picker_types": "image",
-    "images_upload_url": "/api/tinymce-upload/",  # You'll need to create this endpoint
+    'file_picker_callback': 'djangoFileBrowser',
+    'convert_urls': False,
+    'relative_urls': False,
+
+    'external_filemanager_path': '/admin/filebrowser/browse/?pop=2',
+    'filemanager_title': 'FileBrowser',
 }
 
 FILEBROWSER_DIRECTORY = ''

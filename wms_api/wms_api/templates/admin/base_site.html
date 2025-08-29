@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'filebrowser/js/AddFileBrowser.js' %}"></script>
+    <script>
+        // Debug: Check if function exists
+        console.log('djangoFileBrowser function:', typeof djangoFileBrowser);
+        
+        // Manual function definition for TinyMCE 5+
+        if (typeof djangoFileBrowser === 'undefined') {
+            function djangoFileBrowser(callback, value, meta) {
+                var cmsURL = '/admin/filebrowser/browse/?pop=2';
+                cmsURL = cmsURL + "&type=" + meta.filetype;
+                
+                tinymce.activeEditor.windowManager.openUrl({
+                    url: cmsURL,
+                    title: 'FileBrowser',
+                    width: 980,
+                    height: 500,
+                });
+            }
+        }
+    </script>
+{% endblock %}
