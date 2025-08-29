@@ -126,9 +126,16 @@ TINYMCE_DEFAULT_CONFIG = {
     "menubar": True,
     "statusbar": True,
 
+    # FileBrowser integration
     'file_picker_callback': 'djangoFileBrowser',
     'convert_urls': False,
     'relative_urls': False,
+
+    'external_filemanager_path': '/admin/filebrowser/browse/?pop=2',
+    'filemanager_title': 'FileBrowser',
+    'external_plugins': {
+        'filemanager': '/static/filebrowser/js/filemanager.js'  # Make sure this path exists
+    }
 }
 
 FILEBROWSER_DIRECTORY = ''
