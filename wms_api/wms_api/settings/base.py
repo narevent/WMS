@@ -11,7 +11,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Shared settings between development and production
 INSTALLED_APPS = [
     "tinymce",
-    "grappelli",
     "filebrowser",
 
     "django.contrib.admin",
@@ -102,14 +101,37 @@ REST_FRAMEWORK = {
 }
 
 TINYMCE_DEFAULT_CONFIG = {
-    "height": "500px",
-    "plugins": "advlist autolink lists link image charmap searchreplace visualblocks code insertdatetime media table paste code help wordcount spellchecker",
-    "toolbar": "undo redo | formatselect | bold italic underline strikethrough | alignleft | aligncenter alignright alignjustify | outdent indent | numlist bullist checklist | casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | insertfile image media pageembed template link codesample | ltr rtl | showcomments addcomment code",
-    "custom_undo_redo_levels": 10,
-    "entity_encoding": "raw",
+    "height": 360,
+    "width": 1120,
+    "cleanup_on_startup": True,
+    "custom_undo_redo_levels": 20,
+    "selector": "textarea",
+    "theme": "silver",
+    
+    "plugins": """
+            save link image media preview codesample
+            table code lists fullscreen insertdatetime nonbreaking
+            directionality searchreplace wordcount visualblocks
+            visualchars fullscreen autolink charmap anchor pagebreak
+            """,
+    
+    "toolbar1": """
+            fullscreen preview bold italic underline | fontselect
+            fontsizeselect | forecolor backcolor | alignleft alignright 
+            aligncenter alignjustify | indent outdent | bullist numlist 
+            table | link image media | codesample
+            """,
+    
+    "toolbar2": """
+            visualblocks visualchars | charmap anchor pagebreak nonbreaking | 
+            code searchreplace
+            """,
+    
+    "menubar": True,
+    "statusbar": True,
+    'convert_urls': False,
+    'relative_urls': False,
 }
-TINYMCE_EXTRA_MEDIA = {"js": ["js/init_tinymce.js"]}
-DIRECTORY = ""
 
 FILEBROWSER_DIRECTORY = ''
 FILEBROWSER_EXTENSIONS = {
