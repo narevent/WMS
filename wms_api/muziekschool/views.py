@@ -9,6 +9,7 @@ from .models import (
     Contact,
     Header,
     Banner,
+    Voorwaarde,
 )
 from .serializers import (
     OverSerializer,
@@ -16,6 +17,7 @@ from .serializers import (
     ContactSerializer,
     HeaderSerializer,
     BannerSerializer,
+    VoorwaardeSerializer,
 )
 
 class OverViewSet(viewsets.ModelViewSet):
@@ -91,4 +93,16 @@ class BannerViewSet(viewsets.ModelViewSet):
     ordering_fields = ["titel", "created_at"]
     ordering = ["titel"]
 
+class VoorwaardeViewSet(viewsets.ModelViewSet):
+    queryset = Voorwaarde.objects.all()
+    serializer_class = VoorwaardeSerializer
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    filterset_fields = ["is_active", "titel"]
+    search_fields = ["titel"]
+    ordering_fields = ["titel", "created_at"]
+    ordering = ["titel"]
 

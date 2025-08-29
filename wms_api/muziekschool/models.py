@@ -94,3 +94,19 @@ class Banner(BaseModel):
 
     def __str__(self):
         return self.titel
+    
+class Voorwaarde(BaseModel):
+    titel = models.CharField(max_length=64)
+    regel1 = models.CharField(max_length=128, blank=True)
+    regel2 = models.CharField(max_length=128, blank=True)
+    regel3 = models.CharField(max_length=128, blank=True)
+    regel4 = models.CharField(max_length=128, blank=True)
+    
+    class Meta:
+        verbose_name = "Voorwaarde"
+        verbose_name_plural = "Voorwaarden"
+        ordering = ["titel"]
+
+    def __str__(self):
+        return self.titel
+    

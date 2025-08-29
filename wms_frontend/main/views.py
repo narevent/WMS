@@ -10,9 +10,8 @@ def custom_server_error_view(request):
     return render(request, "main/500.html", status=500)
 
 def get_banners(banner_type='nieuws'):
-    banners = get_api_data('muziekschool/banners/')  # each banner has titel, info, background_image, type
+    banners = get_api_data('muziekschool/banners/')  # each banner has titel, info, background_image, type, priority
     banners_select = [b for b in banners if b['banner_type'] == banner_type]
-    banners_select = sorted(banners_select, key='priority')
 
     for banner in banners_select:
         if banner['banner_type'] == 'nieuws':
@@ -44,6 +43,7 @@ def home(request):
     projects = get_banners('projecten')
     sponsors = get_banners('sponsor')
     sorted_banners = news + events + projects + sponsors
+    sorted_banners = sorted(sorted_banners, key=lambda banner: banner['priority'])
     context = {
         'headers': get_api_data('muziekschool/headers/'),
         'banners': sorted_banners,

@@ -8,6 +8,7 @@ from .views import (
     contact_info,
     HeaderViewSet,
     BannerViewSet,
+    VoorwaardeViewSet,
 )
 
 router = DefaultRouter()
@@ -16,6 +17,7 @@ router.register(r"contact", ContactViewSet)
 router.register(r"vacatures", VacatureViewSet)
 router.register(r"headers", HeaderViewSet)
 router.register(r"banners", BannerViewSet)
+router.register(r"voorwaarden", VoorwaardeViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

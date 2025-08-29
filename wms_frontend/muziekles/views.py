@@ -23,6 +23,8 @@ def proefles(request):
     return render(request, 'muziekles/proefles.html', context)
 
 def inschrijven(request):
+    voorwaarden = get_api_data('muziekschool/voorwaarden')
+    inschrijven_modal = [v for v in voorwaarden if v['titel'] == 'Inschrijven'][0]
     if request.method == 'POST':
         betalingsplichtige_data = {
             'initialen': request.POST.get('initialen'),
@@ -59,6 +61,7 @@ def inschrijven(request):
     context = {
         'instrumenten': get_api_data('knack/instrumenten/'),
         'lestypes': get_api_data('knack/lestypes/'),
+        'inschrijven_modal': inschrijven_modal,
     }
     return render(request, 'muziekles/inschrijven.html', context)
 
@@ -72,6 +75,9 @@ def instrumenten(request):
 def tarieven(request):
     lestypes = get_api_data('knack/lestypes/')
     lestarieven = get_api_data('knack/lestarieven/')
+    voorwaarden = get_api_data('muziekschool/voorwaarden')
+    tarieven_modal = [v for v in voorwaarden if v['titel'] == 'Tarieven'][0]
+    betaling_modal = [v for v in voorwaarden if v['titel'] == 'Betaling'][0]
     unique_soorten = []
     unique_aantallen = []
     soort_labels = {
@@ -97,6 +103,8 @@ def tarieven(request):
         'filter_options': filter_options,
         'unique_aantallen': unique_aantallen,
         'soort_labels': soort_labels,
+        'tarieven_modal': tarieven_modal,
+        'betaling_modal': betaling_modal,
     }
     return render(request, 'muziekles/tarieven.html', context)
 

@@ -6,6 +6,7 @@ from .models import (
     Contact,
     Header,
     Banner,
+    Voorwaarde,
 )
 
 admin.site.site_header = "WMS Admin"
@@ -54,6 +55,14 @@ class HeaderAdmin(admin.ModelAdmin):
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
+    list_display = ["titel", "is_active", "created_at"]
+    list_filter = ["is_active", "created_at"]
+    search_fields = ["titel", "info"]
+    readonly_fields = ["created_at", "updated_at"]
+    list_editable = ["is_active"]
+
+@admin.register(Voorwaarde)
+class VoorwaardeAdmin(admin.ModelAdmin):
     list_display = ["titel", "is_active", "created_at"]
     list_filter = ["is_active", "created_at"]
     search_fields = ["titel", "info"]

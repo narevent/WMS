@@ -11,8 +11,9 @@ def over_ons(request):
 
 def sponsors(request):
     sponsors = get_banners('sponsor')
+    sorted_sponsors = sorted(sponsors, key=lambda sponsor: sponsor['priority'])
     context = {
-        'banners': sponsors,
+        'banners': sorted_sponsors,
     }
     return render(request, 'stichting/partners.html', context)
 
