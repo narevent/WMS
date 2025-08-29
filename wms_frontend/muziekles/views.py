@@ -24,7 +24,9 @@ def proefles(request):
 
 def inschrijven(request):
     voorwaarden = get_api_data('muziekschool/voorwaarden')
-    inschrijven_modal = [v for v in voorwaarden if v['titel'] == 'Inschrijven'][0]
+    inschrijven_modal = [v for v in voorwaarden if v['titel'] == 'Inschrijven']
+    if inschrijven_modal:
+        inschrijven_modal = inschrijven_modal[0]
     if request.method == 'POST':
         betalingsplichtige_data = {
             'initialen': request.POST.get('initialen'),
