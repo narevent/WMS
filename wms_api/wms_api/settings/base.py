@@ -105,33 +105,32 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 20,
     "selector": "textarea",
     "theme": "silver",
+ 
     "plugins": """
-            textcolor save link image media preview codesample contextmenu
+            save link image media preview codesample
             table code lists fullscreen insertdatetime nonbreaking
-            contextmenu directionality searchreplace wordcount visualblocks
-            visualchars code fullscreen autolink lists charmap print hr
-            anchor pagebreak
+            directionality searchreplace wordcount visualblocks
+            visualchars fullscreen autolink charmap anchor pagebreak
             """,
+
     "toolbar1": """
-            fullscreen preview bold italic underline | fontselect,
-            fontsizeselect | forecolor backcolor | alignleft alignright |
-            aligncenter alignjustify | indent outdent | bullist numlist table |
-            | link image media | codesample |
+            fullscreen preview bold italic underline | fontselect
+            fontsizeselect | alignleft alignright aligncenter alignjustify | 
+            indent outdent | bullist numlist table | link image media | codesample
             """,
+    
     "toolbar2": """
-            visualblocks visualchars |
-            charmap hr pagebreak nonbreaking anchor | code |
+            visualblocks visualchars | charmap anchor pagebreak nonbreaking | 
+            code searchreplace
             """,
-    "contextmenu": "formats | link image",
+    
     "menubar": True,
     "statusbar": True,
 
     'file_picker_callback': 'djangoFileBrowser',
     'convert_urls': False,
     'relative_urls': False,
-
-    'external_filemanager_path': '/admin/filebrowser/browse/?pop=2',
-    'filemanager_title': 'FileBrowser',
+    'remove_script_host': False,
 }
 
 FILEBROWSER_DIRECTORY = ''
