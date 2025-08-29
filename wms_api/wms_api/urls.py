@@ -19,6 +19,8 @@ def health_check(request):
 urlpatterns = [
     path('health/', health_check, name='health'),
     path('admin/filebrowser/', site.urls),  # FileBrowser URLs
+    path('tinymce/filebrowser/', site.urls),  # FileBrowser for TinyMCE
+    path("tinymce/", include("tinymce.urls")),  # Required for TinyMCE
     path("admin/", admin.site.urls),
     path("api/", api_root),  # custom root
     path('api/branding/', include('branding.urls')),
