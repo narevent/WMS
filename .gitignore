@@ -11,7 +11,6 @@ env/
 staticfiles/
 # Media files (but keep default.jpg)
 media/*
-!media/default.jpg
 !wms_api/media/default.jpg
 *.pickle
 
