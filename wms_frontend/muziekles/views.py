@@ -78,8 +78,10 @@ def tarieven(request):
     lestypes = get_api_data('knack/lestypes/')
     lestarieven = get_api_data('knack/lestarieven/')
     voorwaarden = get_api_data('muziekschool/voorwaarden')
-    tarieven_modal = [v for v in voorwaarden if v['titel'] == 'Tarieven'][0]
-    betaling_modal = [v for v in voorwaarden if v['titel'] == 'Betaling'][0]
+    tarieven_modal = [v for v in voorwaarden if v['titel'] == 'Tarieven']
+    tarieven_modal = tarieven_modal[0] if tarieven_modal else tarieven_modal
+    betaling_modal = [v for v in voorwaarden if v['titel'] == 'Betaling']
+    betaling_modal = betaling_modal[0] if betaling_modal else betaling_modal
     unique_soorten = []
     unique_aantallen = []
     soort_labels = {
