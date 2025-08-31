@@ -84,39 +84,6 @@ ALLOWED_HOSTS=localhost,127.0.0.1
 API_BASE_URL=http://localhost:8000/api/
 ```
 
-## Media Files & Default Images
-
-### Git Tracking
-Only `default.jpg` files are tracked in version control while all other media files are ignored:
-
-```bash
-# .gitignore setup:
-wms_api/media/*                # Ignore all media files
-!wms_api/media/default.jpg     # But keep default.jpg
-wms_frontend/media/*           # Same for frontend
-!wms_frontend/media/default.jpg
-```
-
-### Media Storage by Environment
-
-**Development** (local files):
-- Files stored in `wms_api/media/`
-- Served directly by Django development server
-- URLs: `http://localhost:8000/media/`
-- `default.jpg` available after git clone
-
-**Production** (Docker volumes):
-- Files stored in Docker volume: `wms_api_media`
-- Served by Nginx for better performance
-- URLs: `https://yourdomain.com/media/api/`
-- `default.jpg` copied during Docker build
-
-### After Cloning
-Verify default image is available:
-```bash
-ls wms_api/media/default.jpg  # Should exist from git
-```
-
 ## Core Modules
 
 - **activiteiten** - Cursus, Workshop, Project, Groep
