@@ -1,21 +1,14 @@
-# Python
 __pycache__/
 *.py[cod]
 
-# Virtual env
 wms_venv/
-env/
 
-# Django stuff
 *.sqlite3
 staticfiles/
-# Media files (but keep main default.jpg only)
 wms_api/media/*
 !wms_api/media/default.jpg
 *.pickle
 
-# Environment variables
 .env
 
-# OSX
 .DS_Store
