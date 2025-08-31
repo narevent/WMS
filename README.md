@@ -86,13 +86,13 @@ API_BASE_URL=http://localhost:8000/api/
 
 ## Core Modules
 
-- **activiteiten** - Cursus, Workshop, Project, Groep
-- **agenda** - Posts, Events, Vakanties
-- **knack** - Instrument, Locatie, Lestypes, Lestarief, Docent
-- **muziekschool** - Over, Vacature, Contact, Header, Banner, Voorwaarde
-- **stichting** - Overeenkomst, Sponsor, Anbi, Document
-- **inbox** - Bericht, Proefles, Betalingsplichtige, Inschrijving
-- **branding** - Assets, Design patterns
+- **Activiteiten** - Cursus, Workshop, Project, Groep
+- **Agenda** - Posts, Events, Vakanties
+- **Knack** - Instrument, Locatie, Lestypes, Lestarief, Docent
+- **Muziekschool** - Over, Vacature, Contact, Header, Banner, Voorwaarde
+- **Stichting** - Overeenkomst, Sponsor, Anbi, Document
+- **Inbox** - Bericht, Proefles, Betalingsplichtige, Inschrijving
+- **Branding** - Assets, Design patterns
 
 ## API Endpoints
 
