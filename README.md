@@ -122,7 +122,7 @@ docker compose exec wms_api python manage.py update_vakanties --settings='wms_ap
 
 - **activiteiten** - Cursus, Workshop, Project, Groep
 - **agenda** - Posts, Events, Vakanties
-- **knack** - Instrument, Locatie, Lestypes, Lestatief, Docent
+- **knack** - Instrument, Locatie, Lestypes, Lestarief, Docent
 - **muziekschool** - Over, Vacature, Contact, Header, Banner, Voorwaarde
 - **stichting** - Overeenkomst, Sponsor, Anbi, Document
 - **inbox** - Bericht, Proefles, Betalingsplichtige, Inschrijving
