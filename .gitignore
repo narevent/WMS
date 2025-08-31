@@ -12,8 +12,6 @@ staticfiles/
 # Media files (but keep main default.jpg only)
 wms_api/media/*
 !wms_api/media/default.jpg
-wms_frontend/media/*
-!wms_frontend/media/default.jpg
 *.pickle
 
 # Environment variables
