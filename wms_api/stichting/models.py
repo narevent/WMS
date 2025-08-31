@@ -52,7 +52,7 @@ class Anbi(BaseModel):
 
     class Meta:
         verbose_name = "ANBI"
-        verbose_name_plural = "ANBI documenten"
+        verbose_name_plural = "ANBI"
         ordering = ["-jaar"]
 
     def __str__(self):
