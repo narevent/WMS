@@ -9,7 +9,11 @@ env/
 # Django stuff
 *.sqlite3
 staticfiles/
-media/
+# Media files (but keep default.jpg)
+media/*
+!media/default.jpg
+!wms_api/media/default.jpg
+!wms_frontend/media/default.jpg
 *.pickle
 
 # Environment variables

@@ -84,6 +84,42 @@ ALLOWED_HOSTS=localhost,127.0.0.1
 API_BASE_URL=http://localhost:8000/api/
 ```
 
+## Core Modules
+
+- **activiteiten** - Cursus, Workshop, Project, Groep
+- **agenda** - Posts, Events, Vakanties
+- **knack** - Instrument, Locatie, Lestypes, Lestarief, Docent
+- **muziekschool** - Over, Vacature, Contact, Header, Banner, Voorwaarde
+- **stichting** - Overeenkomst, Sponsor, Anbi, Document
+- **inbox** - Bericht, Proefles, Betalingsplichtige, Inschrijving
+- **branding** - Assets, Design patterns
+
+## API Endpoints
+
+```
+/api/activiteiten/    # Cursussen, Workshops, Projecten, Groepen
+/api/agenda/          # Posts, Events, Vakanties
+/api/knack/           # Instrumenten, Lestypes, Lestarieven, Locaties, Docenten
+/api/muziekschool/    # Over, Contact, Vacatures, Headers, Banners, Voorwaarden
+/api/stichting/       # Overeenkomsten, Sponsors, Anbi, Documents
+/api/branding/        # Assets, Design patterns
+/api/inbox/           # Berichten, Proeflessen, Betalingsplichtigen, Inschrijvingen
+```
+
+All endpoints support filtering, search, ordering, and pagination.
+
+### Different Media Servers (Dev vs Prod)
+
+**Development** (local files):
+- Files stored in `wms_api/media/`
+- Served directly by Django development server
+- URLs: `http://localhost:8000/media/`
+
+**Production** (Docker volumes):
+- Files stored in Docker volumes: `wms_api_media`
+- Served by Nginx for better performance
+- URLs: `https://yourdomain.com/media/api/`
+
 ## Production Deployment
 
 ### Environment Configuration
@@ -109,38 +145,10 @@ docker compose exec wms_api python manage.py migrate --settings='wms_api.setting
 docker compose exec wms_api python manage.py createsuperuser --settings='wms_api.settings.production'
 docker compose exec wms_frontend python manage.py migrate --settings='wms_frontend.settings.production'
 
-docker compose exec wms_api python manage.py collectstatic --noinput --settings='wms_api.settings.production'
-docker compose exec wms_frontend python manage.py collectstatic --noinput --settings='wms_frontend.settings.production'
-
-docker compose exec wms_api python manage.py update_instruments --settings='wms_api.settings.production'
 docker compose exec wms_api python manage.py update_lestypes --settings='wms_api.settings.production'
 docker compose exec wms_api python manage.py update_locaties --settings='wms_api.settings.production'
 docker compose exec wms_api python manage.py update_vakanties --settings='wms_api.settings.production'
 ```
-
-## Core Modules
-
-- **activiteiten** - Cursus, Workshop, Project, Groep
-- **agenda** - Posts, Events, Vakanties
-- **knack** - Instrument, Locatie, Lestypes, Lestarief, Docent
-- **muziekschool** - Over, Vacature, Contact, Header, Banner, Voorwaarde
-- **stichting** - Overeenkomst, Sponsor, Anbi, Document
-- **inbox** - Bericht, Proefles, Betalingsplichtige, Inschrijving
-- **branding** - Assets, Design patterns
-
-## API Endpoints
-
-```
-/api/activiteiten/    # Cursussen, Workshops, Projecten, Groepen
-/api/agenda/          # Posts, Events, Vakanties
-/api/knack/           # Instrumenten, Lestypes, Lestarieven, Locaties, Docenten
-/api/muziekschool/    # Over, Contact, Vacatures, Headers, Banners, Voorwaarden
-/api/stichting/       # Overeenkomsten, Sponsors, Anbi, Documents
-/api/branding/        # Assets, Design patterns
-/api/inbox/           # Berichten, Proeflessen, Betalingsplichtigen, Inschrijvingen
-```
-
-All endpoints support filtering, search, ordering, and pagination.
 
 ## Operations
 
@@ -179,11 +187,4 @@ Both return JSON status responses for monitoring.
 
 ```bash
 docker compose restart
-
-docker compose logs wms_api
-docker compose logs wms_frontend
-
-docker compose down && docker compose up -d
-
-docker compose run --rm certbot certificates
 ``` 
