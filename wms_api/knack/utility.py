@@ -92,20 +92,18 @@ def get_or_create_api_data(endpoint, data):
         headers = get_django_auth_headers()
         print(f"Attempting to GET resource from {endpoint} with data: {data}...")
         get_response = requests.get(f"{settings.API_BASE_URL}{endpoint}/", params=data, headers=headers)
+        json_response = get_response.json()['results']
 
-        if get_response.status_code == 200:
+        if get_response.status_code == 200 and len(json_response):
             print("Resource found. Returning existing resource.")
-            return get_response
-        elif get_response.status_code == 404:
-            print("Resource not found (404). Proceeding to create it with POST request...")
-            post_response = post_api_data(f"{settings.API_BASE_URL}{endpoint}/", json=data)
+            return json_response, False
+        else:
+            print("Resource not found. Proceeding to create it with POST request...")
+            post_response = post_api_data(f"{endpoint}", data)
             post_response.raise_for_status()
             print("Resource successfully created.")
-            return post_response
-        else:
-            print(f"Unexpected status code for GET request: {get_response.status_code}")
-            get_response.raise_for_status()
+            return post_response, True
             
     except requests.RequestException as e:
         print(f"Request failed: {e}")
-        return None
+        return None, None

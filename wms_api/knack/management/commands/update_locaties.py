@@ -14,17 +14,11 @@ class Command(BaseCommand):
             url = locatie['field_42']['url']
             kaart = url if url else ''
             data = {'naam': naam, 'adres': adres, 'kaart': kaart}
-            response = get_or_create_api_data('knack/locaties', data)
-            print(response)
-            if response:
-                self.stdout.write(f"Status: {response.status_code}")
-                if response.status_code == 201:
-                    self.stdout.write(self.style.SUCCESS(f"Successfully created locatie: {naam}"))
-                elif response.status_code == 200:
-                    self.stdout.write(self.style.SUCCESS(f"Successfully fetched locatie: {naam}"))
-                else:
-                    self.stdout.write(self.style.ERROR(f"Error: {response.text}"))
+            print(data)
+            response, created = get_or_create_api_data('knack/locaties', data)
+            if created:
+                self.stdout.write(self.style.SUCCESS(f"Successfully created locatie: {naam}"))
             else:
-                self.stdout.write(self.style.ERROR("Failed to send request"))
+                self.stdout.write(self.style.SUCCESS(f"Successfully fetched locatie: {naam}"))
         
-        self.stdout.write(self.style.SUCCESS("Locaties update finished successfully!"))
+        self.stdout.write(self.style.SUCCESS("Locaties update finished"))

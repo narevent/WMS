@@ -61,7 +61,7 @@ class LocatieViewSet(viewsets.ModelViewSet):
         filters.SearchFilter,
         filters.OrderingFilter,
     ]
-    filterset_fields = ["is_active"]
+    filterset_fields = ["naam", "adres", "kaart", "is_active"]
     search_fields = ["naam", "adres"]
     ordering_fields = ["naam", "created_at"]
     ordering = ["naam"]
