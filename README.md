@@ -23,8 +23,8 @@ git clone https://github.com/narevent/WMS && cd WMS
 
 **Development:**
 ```bash
-chmod +x run_dev.sh
-./run_dev.sh
+chmod +x app_dev.sh
+./app_dev.sh
 ```
 
 Access:
@@ -39,6 +39,11 @@ Access:
 cd wms_api && python manage.py migrate --settings='wms_api.settings.development'
 cd wms_api && python manage.py createsuperuser --settings='wms_api.settings.development'
 cd wms_frontend && python manage.py migrate --settings='wms_frontend.settings.development'
+
+cd wms_api && python manage.py update_instruments --settings='wms_api.settings.development'
+cd wms_api && python manage.py update_lestypes --settings='wms_api.settings.development'
+cd wms_api && python manage.py update_locaties --settings='wms_api.settings.development'
+cd wms_api && python manage.py update_vakanties --settings='wms_api.settings.development'
 ```
 
 ### Environment Variables
